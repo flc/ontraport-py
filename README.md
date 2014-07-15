@@ -14,10 +14,12 @@ Usage
 
 Setting your API credentials
 ----------------------------
+```python
 import ontraport
 
 ontraport.config.app_id = <YOUR APP ID>
 ontraport.config.api_key = <YOUR API KEY>
+```
 
 Make sure the API Key has the needed permissions and the owner is set.
 More info: https://support.ontraport.com/entries/26073705-Contacts-API#auth
