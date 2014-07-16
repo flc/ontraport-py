@@ -46,7 +46,14 @@ class Contact(
             'date_modified': 'Date Modified',
             'contact_id': 'Contact ID',
             'spent': 'Spent',
-        }
+        },
+        'Partner Data': {
+            'paypal_address': 'Paypal Address',
+            'number_of_sales': 'Number of Sales',
+            'first_referrer': 'First Referrer',
+            'last_referrer': 'Last Referrer',
+            'partner_program': 'Partner Program',
+        },
     }
     date_fields = set(['birthday', 'date_added', 'last_activity', 'date_modified'])
     fetch_xml_id_tag = "contact_id"

@@ -49,13 +49,26 @@ class Resource(object):
 
     def check_response(self, response):
         xml = response.content
-        # print xml
-        result_tag = etree.fromstring(xml)
+        try:
+            result_tag = etree.fromstring(xml)
+        except XMLSyntaxError:
+            logger.debug("response xml: %s", xml)
+            raise APIFailureError(xml)
+
         error_tag = result_tag.find("error")
         if error_tag is None:
             return True
         else:
+            logger.debug("response xml: %s", xml)
             raise APIFailureError(error_tag.text.strip())
+
+    def log_request_params(self, params):
+        _params = params.copy()
+        if 'appid' in _params:
+            _params['appid'] = "XXX"
+        if 'key' in params:
+            _params['key'] = "XXX"
+        logger.debug("request params: %s", _params)
 
     def request(self, req_type, **params):
         params = self.get_request_params(req_type, **params)
@@ -63,8 +76,7 @@ class Resource(object):
             raise ValueError('You must specify APP ID.')
         if not params.get('key'):
             raise ValueError('You must specify API Key.')
-        logger.debug("request params: %s", params)
-        # print params
+        self.log_request_params(params)
         # return
         response = requests.post(self.get_api_url(), params)
         if response.status_code != 200:
