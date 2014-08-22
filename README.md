@@ -49,3 +49,9 @@ Delete contact:
 c = ontraport.Contact(id=1)
 c.delete()
 ```
+
+Fetch sequences:
+```python
+>>> ontraport.Contact.fetch_sequences()
+[(1, 'my sequence 1'), (2, 'my sequence 2')]
+```
