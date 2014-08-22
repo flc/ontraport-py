@@ -77,7 +77,7 @@ Remove sequences:
 Pull tags:
 
 ```python
->>> contact = ontraport.Contact.pull_tags())
+>>> contact = ontraport.Contact.pull_tags()
 [(1, 'my tag 1'), (2, 'my tag 2'), (3, 'my tag 3')]
 ```
 
