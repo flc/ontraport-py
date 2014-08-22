@@ -45,13 +45,61 @@ print contact.email
 ```
 
 Delete contact:
+
 ```python
 c = ontraport.Contact(id=1)
 c.delete()
 ```
 
 Fetch sequences:
+
 ```python
 >>> ontraport.Contact.fetch_sequences()
-[(1, 'my sequence 1'), (2, 'my sequence 2')]
+[(1, 'my sequence 1'), (2, 'my sequence 2'), (3, 'my sequence 3')]
+```
+
+Add sequences:
+
+```python
+>>> contact_id = 100
+>>> contact = ontraport.Contact(id=contact_id)
+>>> contact.add_sequences([1, 2])
+```
+
+Remove sequences:
+
+```python
+>>> contact_id = 100
+>>> contact = ontraport.Contact.retrieve(contact_id)
+>>> contact.remove_sequences([1, 2])
+```
+
+Pull tags:
+
+```python
+>>> contact = ontraport.Contact.pull_tags())
+[(1, 'my tag 1'), (2, 'my tag 2'), (3, 'my tag 3')]
+```
+
+Fetch tags:
+
+```python
+>>> contact = ontraport.Contact.fetch_tags()
+['my tag 1', 'my tag 2', 'my tag 3']
+```
+
+Add tags:
+
+```python
+>>> contact_id = 100
+>>> contact = ontraport.Contact(id=contact_id)
+>>> contact.add_tags(['my tag1', 'my tag 2'])
+```
+
+Remove tags:
+
+```python
+>>> contact_id = 100
+>>> contact = ontraport.Contact(id=contact_id)
+>>> contact.remove_tags(['my tag 2'])
 ```
