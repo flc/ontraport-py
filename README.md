@@ -55,7 +55,7 @@ Fetch sequences:
 
 ```python
 >>> ontraport.Contact.fetch_sequences()
-[(1, 'my sequence 1'), (2, 'my sequence 2'), (3, 'my sequence 3')]
+[('1', 'my sequence 1'), ('2', 'my sequence 2'), ('3', 'my sequence 3')]
 ```
 
 Add sequences:
@@ -78,7 +78,7 @@ Pull tags:
 
 ```python
 >>> contact = ontraport.Contact.pull_tags()
-[(1, 'my tag 1'), (2, 'my tag 2'), (3, 'my tag 3')]
+[('1', 'my tag 1'), ('2', 'my tag 2'), ('3', 'my tag 3')]
 ```
 
 Fetch tags:
