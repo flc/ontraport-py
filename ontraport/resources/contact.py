@@ -124,9 +124,55 @@ class Contact(
             ret.append((id, name))
         return ret
 
+    def _update_sequences(self, action, sequences):
+        """
+        Adds/removes sequences to/from a contact.
+
+        :param action: 'add' or 'remove'
+        :param sequences: list of sequence ids
+        """
+        root = self._root_el_from_id(self.id)
+
+        group_el = etree.Element('Group_Tag')
+        group_el.attrib['name'] = 'Sequences and Tags'
+        root.append(group_el)
+
+        field_el = etree.Element('field')
+        field_el.attrib['name'] = 'Sequences'
+        if action == 'remove':
+            field_el.attrib['action'] = 'remove'
+        field_el.text = self.list_item_separator.join(
+            [str(seq)for seq in sequences]
+            )
+        group_el.append(field_el)
+
+        req_type = "update"
+        data = etree.tostring(root)
+        return self.request(
+                req_type=req_type,
+                data=data,
+                )
+
+    def add_sequences(self, sequences):
+        """
+        Adds the sequences to a contact.
+
+        :param sequences: list of sequence ids
+        """
+        return self._update_sequences('add', sequences)
+
+    def remove_sequences(self, sequences):
+        """
+        Removes the sequences from a contact.
+
+        :param sequences: list of sequence ids
+        """
+        return self._update_sequences('remove', sequences)
+
     @classmethod
     def pull_tags(cls):
-        """List of tag names in the account with corresponding ids
+        """
+        List of tag names in the account with corresponding ids
 
         :return: list of (tag id, tag name) tuples
         """
@@ -176,7 +222,8 @@ class Contact(
                 )
 
     def add_tags(self, tags):
-        """Adds the tags to a contact.
+        """
+        Adds the tags to a contact.
         If a tag doesn't exist yet it will be created.
 
         :param tags: list of tag names
@@ -195,6 +242,11 @@ class Contact(
     def get_deleted_contacts(cls, start, end):
         """
         Contact details of contacts deleted within the given timeframe
+
+        :param start:
+            timeframe start (datetime)
+        :param end:
+            timeframe end (datetime)
         """
         req_type = 'get_deletedcontacts'
         el_start = etree.Element('dateStart')
