@@ -1,3 +1,4 @@
+import datetime
 import logging
 import urlparse
 
@@ -51,6 +52,7 @@ class Resource(object):
         xml = response.content
         try:
             result_tag = etree.fromstring(xml)
+            self.response_result_tag = result_tag
         except XMLSyntaxError:
             logger.debug("response xml: %s", xml)
             raise APIFailureError(xml)
