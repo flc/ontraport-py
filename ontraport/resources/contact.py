@@ -150,7 +150,7 @@ class Contact(
         if action == 'remove':
             field_el.attrib['action'] = 'remove'
         field_el.text = self.list_item_separator.join(
-            [str(seq)for seq in sequences]
+            [str(seq) for seq in sequences]
             )
         group_el.append(field_el)
 
