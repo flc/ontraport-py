@@ -55,7 +55,10 @@ class Contact(
             'partner_program': 'Partner Program',
         },
     }
-    date_fields = set(['birthday', 'date_added', 'last_activity', 'date_modified'])
+    date_fields = set([
+        'birthday', 'date_added',
+        'last_activity', 'date_modified'
+        ])
     fetch_xml_id_tag = "contact_id"
     delete_xml_id_tag = "contact_id"
     create_req_type = "add"
@@ -128,9 +131,14 @@ class Contact(
         """
         Adds/removes sequences to/from a contact.
 
-        :param action: 'add' or 'remove'
-        :param sequences: list of sequence ids
+        :param action:
+            'add' or 'remove'
+        :param sequences:
+            list of sequence ids
         """
+        if isinstance(sequences, (basestring, int)):
+            sequences = [sequences]
+
         root = self._root_el_from_id(self.id)
 
         group_el = etree.Element('Group_Tag')
@@ -157,7 +165,8 @@ class Contact(
         """
         Adds the sequences to a contact.
 
-        :param sequences: list of sequence ids
+        :param sequences:
+            list of sequence ids or a single sequence id
         """
         return self._update_sequences('add', sequences)
 
@@ -165,7 +174,8 @@ class Contact(
         """
         Removes the sequences from a contact.
 
-        :param sequences: list of sequence ids
+        :param sequences:
+            list of sequence ids or a single sequence id
         """
         return self._update_sequences('remove', sequences)
 
@@ -191,7 +201,8 @@ class Contact(
 
     @classmethod
     def fetch_tags(cls):
-        """List of tag names in the account
+        """
+        List of tag names in the account
 
         :return: list of tag names
         """
@@ -210,6 +221,9 @@ class Contact(
         return tags
 
     def _update_tags(self, req_type, tags):
+        if isinstance(tags, basestring):
+            tags = [tags]
+
         root = self._root_el_from_id(self.id)
         for tag in tags:
             tag_el = etree.Element('tag')
@@ -226,7 +240,8 @@ class Contact(
         Adds the tags to a contact.
         If a tag doesn't exist yet it will be created.
 
-        :param tags: list of tag names
+        :param tags:
+            list of tag names or a single tag name
         """
         return self._update_tags("add_tag", tags)
 
@@ -234,7 +249,8 @@ class Contact(
         """
         Removes the tags from a contact.
 
-        :param tags: list of tag names
+        :param tags:
+            list of tag names or a single tag name
         """
         return self._update_tags("remove_tag", tags)
 
