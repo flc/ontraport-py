@@ -83,8 +83,7 @@ class Resource(object):
         response = requests.post(self.get_api_url(), params)
         if response.status_code != 200:
             raise APINonOKResponseError(
-                "API responded with status_code: %s",
-                response.status_code
+                "API responded with status_code: %s" % response.status_code
                 )
         self.check_response(response)
         return response
@@ -118,8 +117,8 @@ class XMLResourceMixin(object):
             for attr, field_name in field_mapping.items():
                 field_el = etree.Element('field')
                 field_el.attrib['name'] = field_name
-                value = getattr(self, attr, '')
-                if value:
+                value = getattr(self, attr, None)
+                if value is not None:
                     if isinstance(value, (list, tuple)):
                         text = self.list_item_separator.join(value)
                     else:
